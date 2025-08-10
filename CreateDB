@@ -1,0 +1,17 @@
+  static Future<Database> initDB() async {
+    return openDatabase(
+      join(await getDatabasesPath(), 'todo_database.db'),
+      onCreate: (db, version) async {
+        // Table for ToDo
+        await db.execute(
+          'CREATE TABLE todos(id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, description TEXT)',
+        );
+
+        // Example: Another table for practice
+        await db.execute(
+          'CREATE TABLE category(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT)',
+        );
+      },
+      version: 1,
+    );
+  }

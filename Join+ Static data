@@ -1,0 +1,20 @@
+static Future<List<Map<String, dynamic>>> getTodosWithCategory() async {
+    final db = await initDB();
+    return db.rawQuery('''
+      SELECT todos.id, todos.title, category.name 
+      FROM todos 
+      INNER JOIN category ON todos.id = category.id
+    ''');
+  }
+
+
+Future<void> insertStaticTodos() async {
+    final db = await initDB(); // already existing getter
+    await db.insert(
+      'todos', // table name
+      {
+        'title': 'Buy groceries again',
+        'description': 'Milk, Bread, Eggs',
+      },
+    );
+  }
